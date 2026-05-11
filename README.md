@@ -3,13 +3,9 @@
 > **核心技术**：深度融合 LLM Agent + Neo4j 知识图谱 + FAISS 向量检索。通过“双路并发”与“确定性旁路”机制，将垂直领域问答召回率提升至 94.7%，成功解决法条张冠李戴的幻觉问题。
 
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
-
 [![GLM-4](https://img.shields.io/badge/LLM-GLM--4-red.svg)](https://bigmodel.cn/)
-
 [![Neo4j](https://img.shields.io/badge/GraphDB-Neo4j-008CC1.svg)](https://neo4j.com/)
-
 [![FAISS](https://img.shields.io/badge/VectorDB-FAISS-yellow.svg)](https://github.com/facebookresearch/faiss)
-
 [![BGE-Reranker](https://img.shields.io/badge/Rerank-BGE--Reranker-green.svg)](https://huggingface.co/BAAI/bge-reranker-v2-m3)
 
 ---
