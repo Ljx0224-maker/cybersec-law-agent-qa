@@ -53,8 +53,7 @@
 
 **问答交互页（主要功能）：**<img width="2199" height="1182" alt="image" src="https://github.com/user-attachments/assets/b86ba78a-49de-499f-907a-a307802722e2" />
 
-**系统管理员工作台界面：**<img width="2199" height="1182" alt="image" src="https://github.com/user-attachments/assets/b34a8b5f-12b3-4f4c-97e1-580ee21a17b5" />
-
+**系统管理员工作台界面：**<img width="2207" height="1189" alt="image" src="https://github.com/user-attachments/assets/c9ef21c7-c894-49af-9f27-f7842d72ad65" />
 
 <img width="2191" height="1184" alt="image" src="https://github.com/user-attachments/assets/b4001fc0-2795-4920-899c-7e2929700d59" />
 
