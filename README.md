@@ -49,13 +49,15 @@
 
 ## 最终效果展示：
 
-**首页：**<img width="866" height="469" alt="image" src="https://github.com/user-attachments/assets/f3d949a5-de61-4b63-bc9e-c19e78ec8a14" />
+**首页：**<img width="2199" height="1196" alt="image" src="https://github.com/user-attachments/assets/6acb8dfa-63dc-4046-a435-3cd9a2178a1f" />
 
-**问答交互页（主要功能）：**<img width="866" height="469" alt="image" src="https://github.com/user-attachments/assets/c6a5f83e-7eca-4185-895d-817910241f31" />
+**问答交互页（主要功能）：**<img width="2199" height="1182" alt="image" src="https://github.com/user-attachments/assets/b86ba78a-49de-499f-907a-a307802722e2" />
 
-**系统管理员工作台界面：**<img width="866" height="462" alt="image" src="https://github.com/user-attachments/assets/b3aec932-08f0-4d5b-9058-759725adf6b6" />
+**系统管理员工作台界面：**<img width="2199" height="1182" alt="image" src="https://github.com/user-attachments/assets/b34a8b5f-12b3-4f4c-97e1-580ee21a17b5" />
 
-<img width="866" height="464" alt="image" src="https://github.com/user-attachments/assets/01c9ab20-8cc3-4c52-8508-3813c9a13bd6" />
+
+<img width="2191" height="1184" alt="image" src="https://github.com/user-attachments/assets/b4001fc0-2795-4920-899c-7e2929700d59" />
+
 
 
 
