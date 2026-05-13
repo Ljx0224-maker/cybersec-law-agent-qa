@@ -1,28 +1,55 @@
-# 接收用户问题，先用大模型提取关键词去查图谱，再用问题去查向量库，接着用 BGE 模型对向量库结果进行重排序（Rerank），最后将所有线索喂给大模型生成答案
 import os
 from dotenv import load_dotenv
-#os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+# os.environ["HF_ENDPOINT"] = "https://hf-mirror.com" 
 import re
+import streamlit as st
 from langchain_community.vectorstores import FAISS
 from neo4j import GraphDatabase
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from sentence_transformers import CrossEncoder
 
+# 加载环境变量
 load_dotenv()
-ZHIPU_API_KEY = os.getenv("ZHIPU_API_KEY")
-NEO4J_URI = os.getenv("NEO4J_URI")
-NEO4J_USERNAME = os.getenv("NEO4J_USERNAME")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 
-print("正在唤醒GraphRAG+Reranker智能问答Agent...")
+@st.cache_resource
+def init_system_resources():
+    print("正在唤醒GraphRAG+Reranker智能问答Agent...")
+    
+    zhipu_api_key = os.getenv("ZHIPU_API_KEY")
+    neo4j_uri = os.getenv("NEO4J_URI")
+    neo4j_username = os.getenv("NEO4J_USERNAME")
+    neo4j_password = os.getenv("NEO4J_PASSWORD")
 
-embeddings = OpenAIEmbeddings(model="embedding-3", openai_api_key=ZHIPU_API_KEY, openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
-llm = ChatOpenAI(temperature=0.1, model="glm-4", openai_api_key=ZHIPU_API_KEY, openai_api_base="https://open.bigmodel.cn/api/paas/v4/")
+    # 1. 初始化大模型 Embedding (调用智谱)
+    emb = OpenAIEmbeddings(
+        model="embedding-3", 
+        openai_api_key=zhipu_api_key, 
+        openai_api_base="https://open.bigmodel.cn/api/paas/v4/"
+    )
+    
+    # 2. 初始化大模型 LLM (调用智谱 GLM-4)
+    llm_model = ChatOpenAI(
+        temperature=0.1, 
+        model="glm-4", 
+        openai_api_key=zhipu_api_key, 
+        openai_api_base="https://open.bigmodel.cn/api/paas/v4/"
+    )
+    
+    # 3. 加载本地 FAISS 向量库
+    v_db = FAISS.load_local("./faiss_db", emb, allow_dangerous_deserialization=True)
+    
+    # 4. 建立 Neo4j 图数据库连接池
+    driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_username, neo4j_password))
+    
+    # 5. 加载 BGE 交叉精排模型（非常占内存，缓存它最关键！）
+    reranker = CrossEncoder('BAAI/bge-reranker-base')
+    
+    return emb, llm_model, v_db, driver, reranker
 
-vector_db = FAISS.load_local("./faiss_db", embeddings, allow_dangerous_deserialization=True)
-neo4j_driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
-reranker_model = CrossEncoder('BAAI/bge-reranker-base')
+# 全局获取实例化对象，Streamlit 会自动命中缓存
+embeddings, llm, vector_db, neo4j_driver, reranker_model = init_system_resources()
+
 
 def extract_keywords(query):
     prompt = PromptTemplate(
@@ -129,6 +156,7 @@ def search_vector_with_reranker(query, keywords):
     final_results = vip_texts + normal_top_10
     
     return final_results[:15]
+
 def generate_final_answer(query, vector_context, graph_context):
     prompt_template = """
     你是一个权威的国家法律合规 AI 顾问。
@@ -161,6 +189,7 @@ def generate_final_answer(query, vector_context, graph_context):
     response = chain.invoke({"graph_context": str_graph, "vector_context": str_vector, "query": query})
     return response.content
 
+# 保留用于本地命令行测试的入口（在 Streamlit 中此段会被忽略）
 if __name__ == "__main__":
     print("\nAgent 已就绪！多法域双路知识引擎连接成功。")
     
