@@ -47,6 +47,8 @@
 * **推理过程可视化**：前端 Streamlit 开发了专用推理面板，实时展示关键词提取结果、图谱逻辑链路与精排得分。
 * **持久化**：采用 SQLite 管理会话，通过 UUID 与 SHA-256 哈希保障多用户会话隔离与数据安全。
 
+已经部署上线，访问：https://cybersec-law-agent-app.streamlit.app/
+
 ## 最终效果展示：
 
 **首页：**<img width="2199" height="1196" alt="image" src="https://github.com/user-attachments/assets/6acb8dfa-63dc-4046-a435-3cd9a2178a1f" />
