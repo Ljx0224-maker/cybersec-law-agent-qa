@@ -1,7 +1,7 @@
 # 接收用户问题，先用大模型提取关键词去查图谱，再用问题去查向量库，接着用 BGE 模型对向量库结果进行重排序（Rerank），最后将所有线索喂给大模型生成答案
 import os
 from dotenv import load_dotenv
-os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+#os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 import re
 from langchain_community.vectorstores import FAISS
 from neo4j import GraphDatabase
